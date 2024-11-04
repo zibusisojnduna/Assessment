@@ -7,6 +7,7 @@ import Landing from '../pages/landing'
 import Layout from '../pages/layout'
 import Login from '../pages/login'
 import SignUp from '../pages/signUp'
+import Home from '../pages/home'
 
 function App() {
  
@@ -17,6 +18,7 @@ function App() {
             <Route index element={<Landing />} />
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<SignUp />} />
+            <Route path='home' element={<Home/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
