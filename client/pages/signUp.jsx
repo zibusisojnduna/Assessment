@@ -8,6 +8,7 @@ export default function SignUp() {
             <p>Please enter the following infromation</p>
         </div>
 
+        <form>
         <div>
             <h2>Name</h2>
             <input className='w3-input' type='text' placeholder='Enter full name'></input>
@@ -24,6 +25,8 @@ export default function SignUp() {
             <button className='w3-button' style={{backgroundColor:"#fb607f", margin:"2%"}}>Register</button>
 
         </div>
+        </form>
+       
     </section>
   )
 }

@@ -10,6 +10,7 @@ export default function Login() {
             <p>Please enter the following details to login</p>
         </div>
 
+        <form>
         <div style={{padding:"5%"}}>
             <h2>Username</h2>
             <input className='w3-input' type="text" placeholder="Enter your username"/>
@@ -24,6 +25,8 @@ export default function Login() {
             <button className='w3-button' style={{backgroundColor:"#fb607f"}}>Login</button>
             <p>Don't have an account? <Link to="/signup" color='#fb607f'>Sign Up</Link></p>
         </div>
+        </form>
+      
         
     </section>
   )
