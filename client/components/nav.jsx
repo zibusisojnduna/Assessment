@@ -3,7 +3,7 @@ import { IoHome } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { BsBasket2 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
-
+import { IoMdPerson } from "react-icons/io";
 export default function Navigation() {
   return (
 <div className="w3-bar" style={{backgroundColor:"white", display:"flex", padding:"5%", justifyContent:"space-around", alignItems:"center",}}>
