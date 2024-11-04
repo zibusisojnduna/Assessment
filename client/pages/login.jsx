@@ -22,7 +22,7 @@ export default function Login() {
 
         <div style={{padding:"5%"}}>
             <button className='w3-button' style={{backgroundColor:"#fb607f"}}>Login</button>
-            <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+            <p>Don't have an account? <Link to="/signup" color='#fb607f'>Sign Up</Link></p>
         </div>
         
     </section>
