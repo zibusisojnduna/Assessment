@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserProfile, updateUserProfile, logout } from '../features/profile/profileSlice';
+import { fetchUserProfile, updateUserProfile, logout } from '../features/profileSlice';
 import "../src/assets/w3.css"
 
 const ProfilePage = () => {
