@@ -18,9 +18,9 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
   .catch(err => console.error('MongoDB connection error:', err));
 
 
-const authRoutes = require('./routes/auth');
-const productRoutes = require('./routes/products');
-const cartRoutes = require('./routes/cart');
+const authRoutes = require('./src/routes/auth');
+const productRoutes = require('./src/routes/product');
+const cartRoutes = require('./src/routes/cart');
 
 app.use('/api/auth', authRoutes); 
 app.use('/api/products', productRoutes); 
