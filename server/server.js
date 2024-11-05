@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 
 const authRoutes = require('./src/routes/auth');
-const productRoutes = require('./src/routes/product');
+const productRoutes = require('./src/routes/products');
 const cartRoutes = require('./src/routes/cart');
 
 app.use('/api/auth', authRoutes); 
