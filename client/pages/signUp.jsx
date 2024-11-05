@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../features/registerSlice'
 import { useNavigate } from 'react-router-dom'
 
+
 export default function SignUp() {
   const dispatch = useDispatch()
   const { loading, error} = useSelector(state => state.register)
@@ -15,20 +16,19 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert('Passwords do not match')
       return
     }
-    dispatch(registerUser({ name, email, username, password}))
-    .unwrap()
-    .then(() => {
-    navigate('/login')
-    })
-    .catch((error) => {
-      console.error("Registration failed", error)
-    })
+    try {
+      const user = await signUp(email, password);
+      await addUserToFirestore(user); 
+      console.log("User signed up and added to Firestore", user);
+    } catch (error) {
+      setError(error.message);
+    }
   }
   return (
     <section>
@@ -44,6 +44,9 @@ export default function SignUp() {
 
             <h2>Enail Address</h2>
             <input className='w3-input' type='email' placeholder='Enter email address' onChange={(e) => setEmail(e.target.value)} required></input>
+
+            <h2>Select Username</h2>
+            <input className='w3-input' type='text' placeholder='Choose a username' onChange={(e) => setUsername(e.target.value)} required></input>
 
             <h2>Password</h2>
             <input className='w3-input' type='password' placeholder='Enter password' onChange={(e) => setPassword(e.target.value)} required></input>

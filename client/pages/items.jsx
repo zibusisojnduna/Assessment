@@ -1,8 +1,27 @@
-import React from 'react'
 import { BsBasket2 } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
+import React, { useEffect, useState } from "react";
+import { getItemsFromFirestore } from "../../server/src/services/itemServices";
 
 export default function Items() {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const itemsData = await getItemsFromFirestore();
+        setItems(itemsData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchItems();
+  }, []);
+  
   return (
     <section>
         <div style={{display:"flex", textAlign:"center", margin:"5%"}}>
