@@ -1,63 +1,54 @@
-import { BsBasket2 } from "react-icons/bs";
-import { CiSearch } from "react-icons/ci";
-import React, { useEffect, useState } from "react";
-import { getItemsFromFirestore } from "../../server/src/services/itemServices";
+import React, { useEffect, useState } from 'react';
+import { db } from '../firebase'; 
 
-export default function Items() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const ProductsList = () => {
+  const [products, setProducts] = useState([]); 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    const fetchItems = async () => {
+    
+    const fetchProducts = async () => {
       try {
-        const itemsData = await getItemsFromFirestore();
-        setItems(itemsData);
+        const productsCollection = await db.collection('products').get(); 
+        const productsData = productsCollection.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProducts(productsData);
+        setLoading(false);
       } catch (error) {
-        setError(error.message);
-      } finally {
+        console.error('Error fetching products: ', error);
         setLoading(false);
       }
     };
-    fetchItems();
+
+    fetchProducts();
   }, []);
-  
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <section>
-        <div style={{display:"flex", textAlign:"center", margin:"5%"}}>
-            <h1>Home</h1>
-            <BsBasket2/>
-            <div style={{backgroundImage:`url(${require('../src/assets/user.png')})`}}></div>
-        </div>
-
-        <div>
-            <input className='w3-input' type='text' placeholder='Search for items'></input>
-        </div>
-
-        <div style={{display:"flex", margin:"5%"}}>
-            <div style={{backgroundImage:`url(${require('../src/assets/Adidas Samba.jpg')})`, height:"25%", width:"20%"}}>
-
+    <div>
+      <h1>Product Catalog</h1>
+      <div className="products-list">
+        {products.length === 0 ? (
+          <p>No products available</p>
+        ) : (
+          products.map((product) => (
+            <div key={product.id} className="product-card">
+               <h2>{product.name}</h2> 
+              <h3>{product.type}</h3>
+              <p>{product.description}</p>
+              <p>Price: ${product.price}</p>
+              {product.imageUrl && <img src={product.image} alt={product.name} />}
             </div>
-                
-        </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
 
-            <div>
-                <h1>Popular</h1>
-                <div>
-                    <div style={{backgroundImage:`url(${require('../src/assets/NIKE+AIR+MAX+PULSE.png')})`, display:"flex", justifyContent:"center", alignItems:"center", margin:"5%", height:"75%", width:"30%"}}>
-
-                    </div>
-
-                    <div>
-
-                    </div>
-                    
-                    <div>
-
-                    </div>
-                </div>
-            </div>
-        
-    </section>
-  )
-}
+export default ProductsList;
