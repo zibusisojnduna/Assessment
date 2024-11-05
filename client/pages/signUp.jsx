@@ -1,6 +1,35 @@
 import React from 'react'
 import "../src/assets/w3.css"
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { registerUser } from '../features/registerSlice'
+import { useNavigate } from 'react-router-dom'
+
 export default function SignUp() {
+  const dispatch = useDispatch()
+  const { loading, error} = useSelector(state => state.register)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (password !== confirmPassword) {
+      alert('Passwords do not match')
+      return
+    }
+    dispatch(registerUser({ name, email, username, password}))
+    .unwrap()
+    .then(() => {
+    navigate('/login')
+    })
+    .catch((error) => {
+      console.error("Registration failed", error)
+    })
+  }
   return (
     <section>
         <div>
@@ -8,19 +37,19 @@ export default function SignUp() {
             <p>Please enter the following infromation</p>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
         <div>
             <h2>Name</h2>
-            <input className='w3-input' type='text' placeholder='Enter full name'></input>
+            <input className='w3-input' type='text' placeholder='Enter full name' onChange={(e) => setName(e.target.value)} required></input>
 
             <h2>Enail Address</h2>
-            <input className='w3-input' type='email' placeholder='Enter email address'></input>
+            <input className='w3-input' type='email' placeholder='Enter email address' onChange={(e) => setEmail(e.target.value)} required></input>
 
             <h2>Password</h2>
-            <input className='w3-input' type='password' placeholder='Enter password'></input>
+            <input className='w3-input' type='password' placeholder='Enter password' onChange={(e) => setPassword(e.target.value)} required></input>
 
             <h2>Confirm Password</h2>
-            <input className='w3-input' type='password' placeholder='Confirm password'></input>
+            <input className='w3-input' type='password' placeholder='Confirm password' onChange={(e) => setConfirmPassword(e.target.value)} required></input>
 
             <button className='w3-button' style={{backgroundColor:"#fb607f", margin:"2%"}}>Register</button>
 

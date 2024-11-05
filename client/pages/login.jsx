@@ -1,8 +1,26 @@
 import React from 'react'
 import "../src/assets/w3.css"
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser } from '../features/loginSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+    const dispatch = useDispatch()
+    const { loading, error} = useSelector(state => state.auth)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(loginUser({ username, password}))
+        .unwrap()
+        .then(() => {
+            navigate('/items')
+        })
+    }
   return (
     <section>
         <div style={{padding:"5%"}}>
@@ -10,15 +28,15 @@ export default function Login() {
             <p>Please enter the following details to login</p>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
         <div style={{padding:"5%"}}>
             <h2>Username</h2>
-            <input className='w3-input' type="text" placeholder="Enter your username"/>
+            <input className='w3-input' type="text" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)} required/>
         </div>
 
         <div style={{padding:"5%"}}>
             <h2>Password</h2>
-            <input className='w3-input' type="password" placeholder="Enter your password"/>
+            <input className='w3-input' type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
         </div>
 
         <div style={{padding:"5%"}}>
